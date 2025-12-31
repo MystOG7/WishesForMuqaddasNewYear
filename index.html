@@ -33,6 +33,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
+        /* Animations */
         .floating { animation: floating 3s ease-in-out infinite; }
         .pulse-glow { animation: pulse 2s infinite; }
         .rubber-band { animation: rubberBand 1s ease-out; }
@@ -86,11 +87,19 @@
 
         .song-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
         }
 
         .song-card:hover {
             transform: scale(1.05);
             box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        /* Style for when a song is playing */
+        .song-playing {
+            border-color: #ef4444; /* Red border */
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+            transform: scale(1.05);
         }
 
         .wish-bubble {
@@ -152,6 +161,10 @@
                 <input type="checkbox" class="w-6 h-6 accent-green-500">
                 <span class="ml-4 text-gray-700 font-medium">✨ Master a new skill</span>
             </div>
+            <div class="flex items-center p-4 bg-white rounded-2xl shadow-sm border-l-8 border-purple-400 animate__animated animate__fadeInLeft" style="animation-delay: 0.6s">
+                <input type="checkbox" class="w-6 h-6 accent-purple-500">
+                <span class="ml-4 text-gray-700 font-medium">❤️ Spend time with loved ones</span>
+            </div>
         </div>
         
         <button onclick="nextSection('memories')" class="mt-12 bg-red-500 text-white px-12 py-4 rounded-full shadow-xl hover:bg-red-600 transition-all font-bold uppercase tracking-widest animate__animated animate__bounce">
@@ -161,20 +174,28 @@
 
     <section id="memories" class="hidden min-h-screen flex flex-col items-center justify-center p-8 bg-[#fdf6e3]">
         <h2 class="font-handwritten text-5xl text-blue-500 mb-2 animate__animated animate__rubberBand">Cherished Memories</h2>
-        <p class="text-gray-400 mb-10 italic">Moments from 2025...</p>
+        <p class="text-gray-400 mb-10 italic">The moments that built us...</p>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
             <div class="glass-card p-6 text-center animate__animated animate__fadeInUp">
-                <div class="h-32 bg-yellow-200 rounded-lg mb-4 flex items-center justify-center text-4xl">🎉</div>
-                <p class="text-gray-700">That big celebration</p>
+                <div class="h-32 bg-pink-100 rounded-lg mb-4 flex items-center justify-center text-4xl">🤝</div>
+                <h3 class="font-bold text-lg text-pink-500">We Met Each Other</h3>
+                <p class="text-gray-600 text-sm">The beginning of everything.</p>
             </div>
             <div class="glass-card p-6 text-center animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
-                <div class="h-32 bg-pink-200 rounded-lg mb-4 flex items-center justify-center text-4xl">🍕</div>
-                <p class="text-gray-700">Late night food runs</p>
+                <div class="h-32 bg-purple-100 rounded-lg mb-4 flex items-center justify-center text-4xl">🎮</div>
+                <h3 class="font-bold text-lg text-purple-500">Playing Games Together</h3>
+                <p class="text-gray-600 text-sm">Winning, losing, and laughing.</p>
             </div>
             <div class="glass-card p-6 text-center animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
-                <div class="h-32 bg-blue-200 rounded-lg mb-4 flex items-center justify-center text-4xl">🎓</div>
-                <p class="text-gray-700">Achieving goals</p>
+                <div class="h-32 bg-red-100 rounded-lg mb-4 flex items-center justify-center text-4xl">❤️</div>
+                <h3 class="font-bold text-lg text-red-500">Loving Each Other Truly</h3>
+                <p class="text-gray-600 text-sm">Pure, honest, and real.</p>
+            </div>
+            <div class="glass-card p-6 text-center animate__animated animate__fadeInUp" style="animation-delay: 0.6s">
+                <div class="h-32 bg-blue-100 rounded-lg mb-4 flex items-center justify-center text-4xl">🤗</div>
+                <h3 class="font-bold text-lg text-blue-500">Helping Each Other</h3>
+                <p class="text-gray-600 text-sm">Always there, no matter what.</p>
             </div>
         </div>
         
@@ -206,28 +227,43 @@
 
     <section id="vibes" class="hidden min-h-screen flex flex-col items-center justify-center p-8 bg-[#fdf6e3]">
         <h2 class="font-handwritten text-4xl text-red-500 mb-2 animate__animated animate__rubberBand">Dedicated to Muqaddas</h2>
-        <h3 class="text-xl font-medium text-gray-700 mb-10">Songs That Match Your 2026 Vibe 🎵</h3>
+        <h3 class="text-xl font-medium text-gray-700 mb-10">Click to Play Our Songs 🎵</h3>
         
         <div class="space-y-6 w-full max-w-xs">
-            <div class="cassette-gradient p-5 rounded-2xl shadow-2xl animate__animated animate__bounceIn song-card">
+            
+            <div onclick="toggleMusic('song1', 'card1')" id="card1" class="cassette-gradient p-5 rounded-2xl shadow-2xl animate__animated animate__bounceIn song-card">
                 <div class="bg-white rounded-lg p-3 flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white">▶</div>
+                    <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white">▶</div>
                     <div>
-                        <p class="font-bold text-sm">Unstoppable</p>
-                        <p class="text-xs text-gray-500">Sia</p>
+                        <p class="font-bold text-sm">Jiya Laage Na</p>
+                        <p class="text-xs text-gray-500">For a reason</p>
                     </div>
                 </div>
+                <audio id="song1" src="jiya-laage-na.mp3"></audio>
             </div>
 
-            <div class="cassette-gradient p-5 rounded-2xl shadow-2xl animate__animated animate__bounceIn song-card" style="animation-delay: 0.2s">
+            <div onclick="toggleMusic('song2', 'card2')" id="card2" class="cassette-gradient p-5 rounded-2xl shadow-2xl animate__animated animate__bounceIn song-card" style="animation-delay: 0.2s">
                 <div class="bg-white rounded-lg p-3 flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white">▶</div>
+                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white">▶</div>
                     <div>
-                        <p class="font-bold text-sm">Best Day Of My Life</p>
-                        <p class="text-xs text-gray-500">American Authors</p>
+                        <p class="font-bold text-sm">For A Reason</p>
+                        <p class="text-xs text-gray-500">Our Vibe</p>
                     </div>
                 </div>
+                <audio id="song2" src="for-a-reason.mp3"></audio>
             </div>
+
+            <div onclick="toggleMusic('song3', 'card3')" id="card3" class="cassette-gradient p-5 rounded-2xl shadow-2xl animate__animated animate__bounceIn song-card" style="animation-delay: 0.4s">
+                <div class="bg-white rounded-lg p-3 flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white">▶</div>
+                    <div>
+                        <p class="font-bold text-sm">High On You</p>
+                        <p class="text-xs text-gray-500">Feeling It</p>
+                    </div>
+                </div>
+                <audio id="song3" src="high-on-you.mp3"></audio>
+            </div>
+
         </div>
 
         <button onclick="nextSection('final')" class="mt-12 bg-black text-white px-12 py-4 rounded-full shadow-xl hover:bg-gray-800 transition-all font-bold uppercase tracking-widest">
@@ -242,32 +278,33 @@
     </section>
 
     <script>
-        // This function handles the switching between sections
+        // 1. Navigation Logic
         function nextSection(sectionId) {
-            // 1. Hide all sections
+            // Hide all sections
             const sections = document.querySelectorAll('section');
             sections.forEach(section => {
                 section.classList.add('hidden');
             });
 
-            // 2. Show the specific section requested
+            // Show target section
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
                 targetSection.classList.remove('hidden');
-                
-                // Scroll to top just in case
-                window.scrollTo(0,0);
+                window.scrollTo(0,0); // Scroll to top
 
-                // If moving to the greeting, blast some confetti!
-                if(sectionId === 'greeting') {
+                // Trigger confetti if entering specific sections
+                if(sectionId === 'greeting' || sectionId === 'final') {
                     triggerConfetti();
                 }
             }
         }
 
-        // Fun interaction for the wishes
+        // 2. Wish Bubble Logic
         function popWish(element) {
+            // Shrink effect
             element.style.transform = "scale(0)";
+            
+            // Wait for shrink to finish, then hide and pop confetti
             setTimeout(() => {
                 element.style.display = "none";
                 confetti({
@@ -278,7 +315,42 @@
             }, 300);
         }
 
-        // Confetti effect
+        // 3. Music Player Logic
+        let currentAudio = null;
+        let currentCard = null;
+
+        function toggleMusic(audioId, cardId) {
+            const audio = document.getElementById(audioId);
+            const card = document.getElementById(cardId);
+
+            // If clicked same song playing, pause it
+            if (currentAudio === audio && !audio.paused) {
+                audio.pause();
+                card.classList.remove('song-playing');
+                currentAudio = null;
+                currentCard = null;
+                return;
+            }
+
+            // Stop previously playing song
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0; // Reset
+                if(currentCard) currentCard.classList.remove('song-playing');
+            }
+
+            // Play new song
+            audio.play().catch(error => {
+                console.log("Audio file not found or autoplay blocked. Make sure MP3 is in folder.");
+                alert("Please make sure the MP3 file '" + audio.getAttribute('src') + "' is uploaded to your folder!");
+            });
+            
+            card.classList.add('song-playing');
+            currentAudio = audio;
+            currentCard = card;
+        }
+
+        // 4. Confetti Effect Logic
         function triggerConfetti() {
             var duration = 3 * 1000;
             var animationEnd = Date.now() + duration;
@@ -292,6 +364,7 @@
                 }
 
                 var particleCount = 50 * (timeLeft / duration);
+                // Random bursts
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
             }, 250);
